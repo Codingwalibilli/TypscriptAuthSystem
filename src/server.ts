@@ -3,8 +3,8 @@ import { Application } from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
-import routes from "./routes.js";
-
+import routes from "./routes/routes.js";
+import cookieParser from "cookie-parser";
 
 const server: Application = express();
 server.use(cors());
@@ -15,6 +15,7 @@ server.use(
   })
 );
 server.use("/",routes);
+server.use(cookieParser());
 
 dotenv.config();
 

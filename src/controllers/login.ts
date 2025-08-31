@@ -1,8 +1,6 @@
 import { Request, Response } from "express";
-import { User } from "../usermodel.js";
-import jwt from "jsonwebtoken";
-
-const secretkey = process.env.JWT_SECRET!
+import { User } from "../models/usermodel.js";
+import {generateRefreshAndAccessToken} from "../util/tokenGenerator.js"
 
 export const login = async (req: Request, res: Response) => {
     try {
@@ -31,21 +29,33 @@ export const login = async (req: Request, res: Response) => {
             });
             return;
         }
-        //something key
-        const token = jwt.sign(
-            { _id: registeredUser?._id, email: registeredUser?.email },
-            secretkey,
-            {expiresIn: "15m"}
-        );
-    
-        res.status(200).json({
+
+        const {accessToken, refreshToken} = 
+        generateRefreshAndAccessToken(registeredUser?._id.toString());
+
+        registeredUser.refreshToken = refreshToken
+        await registeredUser.save()
+
+        const options = {
+            httpOnly : true,
+            secure: true
+        }
+        
+        res.status(200)
+        .cookie("accessToken" , accessToken, options)
+        .cookie("refreshToken", refreshToken, options)
+        .json({
             status: 200,
-            success: true,
-            message: "login success",
-            token: token
+            message: "User Logged in Successfully",
+            user: {
+                name: user.name,
+                accessToken: accessToken,
+                refreshToken: refreshToken
+            }
         });
     } 
     catch (error: any) {
+        console.log(error)
         res.status(400).json({
             status: 400,
             message: error.message.toString()

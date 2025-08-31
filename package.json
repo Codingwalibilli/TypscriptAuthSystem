@@ -4,14 +4,16 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon server.ts",
-    "start": "tsc server.ts"
+    "dev": "nodemon dist/server.js",
+    "build": "tsc",
+    "start": "node dist/server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
+  "description": "A JWT based auth system in Typescript",
   "dependencies": {
+    "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
@@ -19,6 +21,7 @@
     "mongoose": "^8.17.2"
   },
   "devDependencies": {
+    "@types/cookie-parser": "^1.4.9",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
     "@types/jsonwebtoken": "^9.0.10",
@@ -27,5 +30,13 @@
     "ts-node": "^10.9.2",
     "tslib": "^2.8.1",
     "typescript": "^5.9.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Codingwalibilli/TypscriptAuthSystem.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Codingwalibilli/TypscriptAuthSystem/issues"
+  },
+  "homepage": "https://github.com/Codingwalibilli/TypscriptAuthSystem#readme"
 }
