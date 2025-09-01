@@ -14,8 +14,8 @@ server.use(
         extended: true,
   })
 );
-server.use("/",routes);
 server.use(cookieParser());
+server.use("/",routes);
 
 dotenv.config();
 

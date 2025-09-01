@@ -12,14 +12,9 @@ export const logout = async (req: Request, res: Response) => {
             {new:true}
         );
 
-        const options = {
-            httpOnly : true,
-            secure: true
-        }
-
         return res.status(200)
-        .clearCookie("accessToken", options)
-        .clearCookie("refreshToken", options)
+        .clearCookie("accessToken", {httpOnly: true})
+        .clearCookie("refreshToken", {httpOnly: true})
         .json({
             status: 200,
             message: "User logged out"

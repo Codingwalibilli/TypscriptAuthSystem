@@ -31,15 +31,10 @@ export const refreshAccess = async (req: Request, res: Response) => {
 
         user.refreshToken = refreshToken;
         await user.save();
-
-        const options = {
-            httpOnly : true,
-            secure: true
-        }
-
+        
         res.status(200)
-        .cookie("accessToken", accessToken, options)
-        .cookie("refreshToken", refreshToken, options)
+        .cookie("accessToken", accessToken, {httpOnly: true,})
+        .cookie("refreshToken", refreshToken, {httpOnly: true,})
         .json({
             status: 200,
             message: "Tokens refreshed Succesfully",

@@ -35,20 +35,15 @@ export const login = async (req: Request, res: Response) => {
 
         registeredUser.refreshToken = refreshToken
         await registeredUser.save()
-
-        const options = {
-            httpOnly : true,
-            secure: true
-        }
         
         res.status(200)
-        .cookie("accessToken" , accessToken, options)
-        .cookie("refreshToken", refreshToken, options)
+        .cookie("accessToken", accessToken, {httpOnly: true,})
+        .cookie("refreshToken", refreshToken, {httpOnly: true,})
         .json({
             status: 200,
             message: "User Logged in Successfully",
             user: {
-                name: user.name,
+                name: registeredUser.name,
                 accessToken: accessToken,
                 refreshToken: refreshToken
             }
